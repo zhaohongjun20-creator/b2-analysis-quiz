@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>分析学分层练习题库 · B2</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">∫</span>
+    <div>
+      <h1>工科数学分析 · 分层练习题库</h1>
+      <p id="bankMeta">共 0 题 · 按章节知识点整理 · 每道题都经过数值复核</p>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat"><b id="statDone">0</b><span>已做</span></div>
+    <div class="stat"><b id="statRate">—</b><span>正确率</span></div>
+    <button class="ghost" id="btnWrong" title="查看错题本">错题本 <em id="wrongCount">0</em></button>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="side">
+    <h2>章节</h2>
+    <nav id="chapterNav"></nav>
+    <h2>筛选</h2>
+    <label class="field"><span>题型</span>
+      <select id="typeFilter">
+        <option value="all">全部题型</option>
+        <option value="choice">选择</option>
+        <option value="findError">找错</option>
+        <option value="fill">填空</option>
+        <option value="calc">计算</option>
+      </select>
+    </label>
+    <label class="field"><span>难度</span>
+      <select id="diffFilter">
+        <option value="0">全部难度</option>
+        <option value="1">易</option>
+        <option value="2">中</option>
+        <option value="3">难</option>
+      </select>
+    </label>
+    <label class="field"><span>顺序</span>
+      <select id="orderMode">
+        <option value="seq">按章节顺序</option>
+        <option value="shuffle">随机打乱</option>
+      </select>
+    </label>
+    <a class="vizlink" href="viz/index.html#cards" target="_blank">📐 打开知识点可视化 →</a>
+    <p class="tip">每题提交后立刻给出对错与解析；解析里标注了教材依据，方便对照复习。</p>
+  </aside>
+
+  <main class="main">
+    <section id="quizView">
+      <div class="qmeta">
+        <span class="badge" id="qChapter">—</span>
+        <span class="badge type" id="qType">—</span>
+        <span class="badge diff" id="qDiff">—</span>
+        <span class="badge id" id="qId">—</span>
+      </div>
+      <div class="stem" id="qStem">正在加载题库…</div>
+      <div class="answerbox" id="answerBox"></div>
+      <div class="actions">
+        <button class="btn primary" id="btnSubmit">提交</button>
+        <button class="btn" id="btnPrev">上一题</button>
+        <button class="btn" id="btnNext">下一题</button>
+        <span class="pos" id="qPos"></span>
+      </div>
+      <div class="solution" id="solution" hidden></div>
+    </section>
+
+    <section id="wrongView" hidden>
+      <div class="wrong-head">
+        <h2>错题本</h2>
+        <button class="btn" id="btnBackQuiz">返回刷题</button>
+        <button class="btn danger" id="btnClearWrong">清空</button>
+      </div>
+      <p class="tip" id="wrongTip">错题保存在本机浏览器（localStorage），不上传任何数据。</p>
+      <ul class="wronglist" id="wrongList"></ul>
+    </section>
+  </main>
+</div>
+
+<footer>
+  <span>《工科数学分析》数智实践大作业 · 选题 B2 交互式练习题库</span>
+  <span>公式由本地渲染器排版，无网络依赖；数据来源 data/questions.json</span>
+</footer>
+
+<script src="tex.js"></script>
+<script src="questions.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

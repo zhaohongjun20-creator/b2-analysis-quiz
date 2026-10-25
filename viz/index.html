@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ε-δ 显微镜 · 工科数学分析可视化工作台</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">ε-δ</span>
+    <div>
+      <h1>分析学可视化工作台</h1>
+      <p>把“极限”的定义掰开揉碎：拖一拖，看得见</p>
+    </div>
+  </div>
+  <nav class="tabs" id="tabs">
+    <button class="tab active" data-view="seq">ε-N 数列极限</button>
+    <button class="tab" data-view="fun">ε-δ 函数极限</button>
+    <button class="tab" data-view="mvt">中值定理家族</button>
+    <button class="tab" data-view="cards">知识卡片</button>
+    <button class="tab" data-view="notes">错题本</button>
+  </nav>
+</header>
+
+<main>
+  <!-- ================= ε-N ================= -->
+  <section class="view active" id="view-seq">
+    <div class="layout">
+      <aside class="panel controls">
+        <h2>控制台</h2>
+        <label class="field">
+          <span>数列 a<sub>n</sub></span>
+          <select id="seqPreset"></select>
+        </label>
+        <label class="field">
+          <span>ε（误差允许范围）<b id="seqEpsVal">0.200</b></span>
+          <input type="range" id="seqEps" min="1" max="1000" value="200">
+        </label>
+        <label class="field">
+          <span>观察项数 n 上限：<b id="seqNmaxVal">60</b></span>
+          <input type="range" id="seqNmax" min="20" max="200" value="60">
+        </label>
+        <div class="readout" id="seqReadout"></div>
+        <p class="hint">拖动 ε 观察：只要 ε 一变，就存在一个 N，使得第 N 项之后的<em>所有</em>项都落进蓝带。</p>
+      </aside>
+      <div class="panel canvas-wrap">
+        <canvas id="seqCanvas"></canvas>
+        <div class="legend">
+          <span class="dot gray"></span>n ≤ N 的项
+          <span class="dot blue"></span>n &gt; N 的项（已进入 ε 带）
+          <span class="dot red"></span>始终跑出 ε 带的项
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ε-δ ================= -->
+  <section class="view" id="view-fun">
+    <div class="layout">
+      <aside class="panel controls">
+        <h2>控制台</h2>
+        <label class="field">
+          <span>函数 f(x)</span>
+          <select id="funPreset"></select>
+        </label>
+        <label class="field">
+          <span>ε：<b id="funEpsVal">0.500</b></span>
+          <input type="range" id="funEps" min="5" max="200" value="50">
+        </label>
+        <label class="field">
+          <span>δ：<b id="funDeltaVal">0.100</b></span>
+          <input type="range" id="funDelta" min="1" max="200" value="10">
+        </label>
+        <div class="btnrow">
+          <button class="btn primary" id="funAuto">自动找合适的 δ</button>
+          <button class="btn" id="funReset">复位</button>
+        </div>
+        <div class="readout" id="funReadout"></div>
+        <p class="hint">定义要的是：<em>任给</em> ε&gt;0，<em>存在</em> δ&gt;0，使 0&lt;|x−x₀|&lt;δ 时 |f(x)−L|&lt;ε。拖动 δ 看红点：只要出现红点，这个 δ 就还不够小。</p>
+      </aside>
+      <div class="panel canvas-wrap">
+        <canvas id="funCanvas"></canvas>
+        <div class="legend">
+          <span class="dot blue"></span>落入水平 ε 带的点
+          <span class="dot red"></span>δ 邻域内却跑出 ε 带的点
+          <span class="dot green"></span>极限点 (x₀, L)
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 中值定理 ================= -->
+  <section class="view" id="view-mvt">
+    <div class="layout">
+      <aside class="panel controls">
+        <h2>控制台</h2>
+        <label class="field">
+          <span>函数 f(x)</span>
+          <select id="mvtPreset"></select>
+        </label>
+        <label class="field">
+          <span>区间左端点 a：<b id="mvtAVal">-1.00</b></span>
+          <input type="range" id="mvtA" min="-200" max="300" value="-100">
+        </label>
+        <label class="field">
+          <span>区间右端点 b：<b id="mvtBVal">2.00</b></span>
+          <input type="range" id="mvtB" min="-200" max="300" value="200">
+        </label>
+        <label class="field checkbox">
+          <input type="checkbox" id="mvtRolle">
+          <span>强制 a、b 满足 f(a)=f(b)（罗尔定理的场景）</span>
+        </label>
+        <div class="readout" id="mvtReadout"></div>
+        <p class="hint">拉格朗日中值定理：在 (a,b) 内至少存在一点 ξ，使切线斜率等于割线斜率。拖动端点，看切点如何移动、是否会消失。</p>
+      </aside>
+      <div class="panel canvas-wrap">
+        <canvas id="mvtCanvas"></canvas>
+        <div class="legend">
+          <span class="dot purple"></span>割线
+          <span class="dot orange"></span>切线（在 ξ 处）
+          <span class="dot green"></span>中值点 ξ
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 知识卡片 ================= -->
+  <section class="view" id="view-cards">
+    <div class="panel cards-panel">
+      <h2>知识卡片 · 极限与连续</h2>
+      <p class="hint">点击卡片翻面，看“易错点”与“反例”。共 <b id="cardCount">0</b> 张。</p>
+      <div class="cards-grid" id="cardsGrid"></div>
+    </div>
+  </section>
+
+  <!-- ================= 错题本 ================= -->
+  <section class="view" id="view-notes">
+    <div class="panel notes-panel">
+      <h2>错题本（本地保存）</h2>
+      <form id="noteForm" class="note-form">
+        <input type="text" id="noteTitle" placeholder="题目标题 / 知识点，例如：ε-N 的 N 只须存在，不须最小" required>
+        <textarea id="noteBody" rows="3" placeholder="我的错误、正确做法、依据（教材第几章）" required></textarea>
+        <button class="btn primary" type="submit">加入错题本</button>
+      </form>
+      <ul class="note-list" id="noteList"></ul>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>《工科数学分析》数智实践大作业 · 选题 A2 知识点交互网页（可离线打开）</span>
+  <span>所有图形与判定均由本地 JavaScript 实时计算，无网络依赖。</span>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
