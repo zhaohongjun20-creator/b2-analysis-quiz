@@ -167,7 +167,7 @@
     if (!t) return NaN;
     t = t.replace(/π/g, 'Math.PI').replace(/pi/gi, 'Math.PI').replace(/^e$/, 'Math.E');
     if (/^[-+*/().\d,eEMathPI]+$/.test(t) && /[0-9]|PI|E/.test(t)) {
-      try { const v = Function('"use strict";return (' + t + ')'); return typeof v === 'number' ? v : NaN; }
+      try { const v = Function('"use strict";return (' + t + ')')(); return typeof v === 'number' ? v : NaN; }
       catch (e) { return NaN; }
     }
     const v = parseFloat(t);
